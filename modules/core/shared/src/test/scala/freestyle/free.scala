@@ -140,6 +140,31 @@ class freeTests extends WordSpec with Matchers {
       """ should compile
     }
 
+    "using the Monad instance to combine operations into a FS.Seq" in {
+      """
+        import cats.syntax.monad._
+        @free trait X {
+          def a: FS[Int]
+          def b(x: Int): FS[Int]
+          def c: FS.Seq[Int] = {
+            val fa: FS.Seq[Int] = a.freeS
+            fa.flatMap(x => b(x).freeS)
+          }
+        }
+      """ should compile
+    }
+
+    "mixing all of the above" in {
+      """
+        import cats.syntax.monad._
+        @free trait X { 
+          def a: FS[Int]
+          def b(i: Int): FS.Par[Int] = a.map(x => x+i) 
+          def c: FS.Par[Int] = (a,a).mapN(_+_)
+          def d: FS.Seq[Int] = c.freeS.flatMap(x => b(x).freeS)
+        }
+      """ should compile
+    }
   }
 
   "the @free annotation" should {
