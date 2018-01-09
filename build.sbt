@@ -17,7 +17,7 @@ lazy val core = module("core")
   .crossDepSettings(
     commonDeps ++ Seq(
       %("cats-free"),
-      %("iota-core", "0.3.4"),
+      %("iota-core"),
       %("simulacrum"),
       %("shapeless") % "test",
       %("cats-laws") % "test",
@@ -287,15 +287,6 @@ lazy val slickExample = jvmModule("slick-example", subFolder = Some("examples"))
     ) ++ commonDeps
   )
 
-lazy val fs2Example = jvmModule("fs2-example", subFolder = Some("examples"))
-  .dependsOn(coreJVM)
-  .settings(noPublishSettings: _*)
-  .settings(
-    libraryDependencies ++= Seq(
-      %("fs2-core")
-    ) ++ commonDeps
-  )
-
 /////////////////////
 //// ALL MODULES ////
 /////////////////////
@@ -324,8 +315,7 @@ lazy val jvmModules: Seq[ProjectReference] = Seq(
   //tests,
   //Examples:
   todolist,
-  slickExample,
-  fs2Example
+  slickExample
 )
 
 lazy val jsModules: Seq[ProjectReference] = Seq(

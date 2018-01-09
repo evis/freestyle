@@ -82,8 +82,7 @@ object ProjectPlugin extends AutoPlugin {
     Seq(
       orgUpdateDocFilesSetting += baseDirectory.value / "docs" / "src",
       orgScriptTaskListSetting := List("validate".asRunnableItemFull),
-      coverageExcludedPackages := "<empty>;todo\\..*;freeslick\\..*;freefs2\\..*"
-
+      coverageExcludedPackages := "<empty>;todo\\..*;freeslick\\..*"
     ) ++ scalaMetaSettings ++ sharedReleaseProcess
 
 }
